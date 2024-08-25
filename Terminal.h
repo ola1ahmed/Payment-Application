@@ -9,7 +9,9 @@
 #include "STD_TYPES.h"
 #include "Card.h"
 
-
+#define MODULE   TEST
+#define TEST     1
+#define USER     2
 typedef struct ST_terminalData_t
 {
 	float32 transAmount;

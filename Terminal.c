@@ -66,24 +66,46 @@ EN_terminalError_t isCardExpired(ST_cardData_t *cardData, ST_terminalData_t* ter
 EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData){
 	
 	EN_terminalError_t Ter_Err_state=TERMINAL_OK;
-	if(termData!=NULL){
+	float32 transaction_amount;
+	if(termData!=NULL)
+	{
+		printf("enter  transaction amount:");
+		scanf("%f",&transaction_amount);
 		
+
+		if( (transaction_amount)<=0 )
+		{
+			Ter_Err_state = INVALID_AMOUNT;
+		}
+		else
+		{
+			termData->transAmount=transaction_amount;
+			Ter_Err_state = TERMINAL_OK;
+		}
 		
 	}
 	else
 	{
-		Ter_Err_state=WRONG_DATE;
+		Ter_Err_state=INVALID_AMOUNT;
 	}
 	
 	return Ter_Err_state;
 	
 }
-/*
+
 EN_terminalError_t isBelowMaxAmount(ST_terminalData_t *termData){
 	
 	EN_terminalError_t Ter_Err_state=TERMINAL_OK;
-	if(termData!=NULL){
-		
+	if(termData!=NULL)
+	{
+		if( (termData->maxTransAmount) < (termData->transAmount) )
+		{
+			Ter_Err_state=EXCEED_MAX_AMOUNT;
+		}
+		else
+		{
+			Ter_Err_state=TERMINAL_OK;
+		}
 		
 	}
 	else
@@ -93,20 +115,32 @@ EN_terminalError_t isBelowMaxAmount(ST_terminalData_t *termData){
 	
 	return Ter_Err_state;
 }
+
 EN_terminalError_t setMaxAmount(ST_terminalData_t *termData, float32 maxAmount){
 	
 	EN_terminalError_t Ter_Err_state=TERMINAL_OK;
-	if(termData!=NULL){
-		
+	if(termData!=NULL)
+	{
+
+		if( (maxAmount)<=0 )
+		{
+			Ter_Err_state = INVALID_MAX_AMOUNT;
+		}
+		else
+		{
+			termData->maxTransAmount=maxAmount;
+			Ter_Err_state = TERMINAL_OK;
+		}
 		
 	}
 	else
 	{
-		Ter_Err_state=WRONG_DATE;
+		Ter_Err_state=INVALID_MAX_AMOUNT;
 	}
 	
 	return Ter_Err_state;
 }
+/*
 EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
 	
 	EN_terminalError_t Ter_Err_state=TERMINAL_OK;
@@ -131,6 +165,8 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
 
 --------------------------------------------------------------------------------
 */
+
+#if MODULE==TEST
 static void getTransactionDateTest(void){
 	
 	
@@ -242,13 +278,124 @@ static void isCardExpriedTest(void){
 static void getTransactionAmountTest(void){
 	
 	
+	ST_terminalData_t termData;
+	EN_terminalError_t Ter_Err_state;
+	
+	
+	printf("\n Test Case 1:\n");
+	printf("TransactionAmount:-100\n");
+	Ter_Err_state=getTransactionAmount(&termData);
+	printf(" Expected Result:INVALID_AMOUNT\n");
+	if(Ter_Err_state==INVALID_AMOUNT)
+	{
+		printf(" Actual Result:INVALID_AMOUNT \n");
+	}
+	else
+	{
+		printf(" Actual Result:TERMINAL_OK \n");
+	}
+	
+	printf("\n Test Case 2:\n");
+	printf("TransactionAmount:0\n");
+	Ter_Err_state=getTransactionAmount(&termData);
+	printf(" Expected Result:INVALID_AMOUNT\n");
+	if(Ter_Err_state==INVALID_AMOUNT)
+	{
+		printf(" Actual Result:INVALID_AMOUNT \n");
+	}
+	else
+	{
+		printf(" Actual Result:TERMINAL_OK \n");
+	}
+	
+	
+	printf("\n Test Case 3:\n");
+	printf("TransactionAmount:100\n");
+	Ter_Err_state=getTransactionAmount(&termData);
+	printf(" Expected Result:TERMINAL_OK\n");
+	if(Ter_Err_state==INVALID_AMOUNT)
+	{
+		printf(" Actual Result:INVALID_AMOUNT \n");
+	}
+	else
+	{
+		printf(" Actual Result:TERMINAL_OK \n");
+	}
+	
+	
 }
 static void isBelowMaxAmountTest(void){
 	
 	
+	ST_terminalData_t termData;
+	EN_terminalError_t Ter_Err_state;
+	
+	
+	printf("\n Test Case 1:\n");
+	printf("Max Amount=90\n");
+	printf("Transaction Amount=100\n");
+	Ter_Err_state=getTransactionAmount(&termData);
+	Ter_Err_state=setMaxAmount(&termData,90);
+	Ter_Err_state=isBelowMaxAmount(&termData);
+	printf(" Expected Result:EXCEED_MAX_AMOUNT\n");
+	if(Ter_Err_state==EXCEED_MAX_AMOUNT)
+	{
+		printf(" Actual Result:EXCEED_MAX_AMOUNT \n");
+	}
+	else
+	{
+		printf(" Actual Result:TERMINAL_OK \n");
+	}
+	
+	printf("\n Test Case 2:\n");
+	printf("Max Amount=120\n");
+	printf("Transaction Amount=100\n");
+	Ter_Err_state=getTransactionAmount(&termData);
+	Ter_Err_state=setMaxAmount(&termData,120);
+	Ter_Err_state=isBelowMaxAmount(&termData);
+	printf(" Expected Result:TERMINAL_OK\n");
+	if(Ter_Err_state==EXCEED_MAX_AMOUNT)
+	{
+		printf(" Actual Result:EXCEED_MAX_AMOUNT \n");
+	}
+	else
+	{
+		printf(" Actual Result:TERMINAL_OK \n");
+	}
+	
+	
+	
 }
 static void setMaxAmountTest(void){
+	ST_terminalData_t termData;
+	EN_terminalError_t Ter_Err_state;
 	
+	
+	printf("\n Test Case 1:\n");
+	printf("Max Amount:0\n");
+	Ter_Err_state=setMaxAmount(&termData,0);
+	printf(" Expected Result:EXCEED_MAX_AMOUNT\n");
+	if(Ter_Err_state==EXCEED_MAX_AMOUNT)
+	{
+		printf(" Actual Result:EXCEED_MAX_AMOUNT \n");
+	}
+	else
+	{
+		printf(" Actual Result:TERMINAL_OK \n");
+	}
+	
+	printf("\n Test Case 2:\n");
+	printf("Max Amount:1000\n");
+	Ter_Err_state=setMaxAmount(&termData,100);
+	printf(" Expected Result:TERMINAL_OK\n");
+	if(Ter_Err_state==INVALID_MAX_AMOUNT)
+	{
+		printf(" Actual Result:INVALID_MAX_AMOUNT \n");
+	}
+	else
+	{
+		printf(" Actual Result:TERMINAL_OK \n");
+	}
 	
 }
 static void isValidCardPANTest(void){
@@ -256,4 +403,4 @@ static void isValidCardPANTest(void){
 	
 }
 
-
+#endif
