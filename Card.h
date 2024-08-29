@@ -38,9 +38,9 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData);
 
 --------------------------------------------------------------------------------
 */
-static void getCardHolderNameTest(void);
-static void getCardExpiryDateTest (void);
-static void getCardPANTest(void); 
+void getCardHolderNameTest(void);
+void getCardExpiryDateTest (void);
+void getCardPANTest(void); 
 
 
 #endif

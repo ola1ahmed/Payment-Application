@@ -6,18 +6,24 @@
 #include <ctype.h>
 #include <time.h>
 
-#include "STD_TYPES.h"
+//#include "STD_TYPES.h"
 #include "Card.h"
+
+
 
 #define MODULE   TEST
 #define TEST     1
 #define USER     2
+
+
 typedef struct ST_terminalData_t
 {
 	float32 transAmount;
 	float32 maxTransAmount;
 	uint8 transactionDate[11];
+	
 }ST_terminalData_t;
+
 typedef enum EN_terminalError_t
 {
 	TERMINAL_OK,
@@ -48,10 +54,10 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData); // Optional
 
 --------------------------------------------------------------------------------
 */
-static void getTransactionDateTest(void);
-static void isCardExpriedTest(void);
-static void getTransactionAmountTest(void);
-static void isBelowMaxAmountTest(void);
-static void setMaxAmountTest(void);
-static void isValidCardPANTest(void);
+void getTransactionDateTest(void);
+void isCardExpriedTest(void);
+void getTransactionAmountTest(void);
+void isBelowMaxAmountTest(void);
+void setMaxAmountTest(void);
+void isValidCardPANTest(void);
 #endif
