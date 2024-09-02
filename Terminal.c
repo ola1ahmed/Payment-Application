@@ -1,20 +1,18 @@
 #include "Terminal.h"
 
 
+
 EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
 	
 	EN_terminalError_t Ter_Err_state=TERMINAL_OK;
 	uint8 transactionDate[11]={0};
 	if(termData!=NULL)
 	{
-		
-		
-		
-		
-		#if (MODULE !=TEST)
-			printf("enter Transaction date:");
+
+		#if (MODULE == USER)
+			printf("enter Transaction date(DD/MM/YYYY):");
 			gets(transactionDate);
-		#else
+		#elif (MODULE ==TEST)
 			strcpy(transactionDate,termData->transactionDate);
 		#endif
 		uint8 TransactionDateLength = strlen(transactionDate);
@@ -77,10 +75,10 @@ EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData){
 	if(termData!=NULL)
 	{
 		
-		#if (MODULE !=TEST)
+		#if (MODULE ==USER)
 		printf("enter  transaction amount:");
 		scanf("%f",&transaction_amount);
-		#else
+		#elif (MODULE ==TEST)
 			transaction_amount=termData->transAmount;
 		#endif
 

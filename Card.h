@@ -6,7 +6,9 @@
 #include <ctype.h>
 
 #include "STD_TYPES.h"
-
+#define MODULE   TEST
+#define TEST     1
+#define USER     2
 typedef struct ST_cardData_t
 {
  uint8 cardHolderName[25];

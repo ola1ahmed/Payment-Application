@@ -10,10 +10,10 @@ EN_cardError_t getCardHolderName(ST_cardData_t *cardData)
 	if(cardData!=NULL)
 	{
 		
-		#if (MODULE !=TEST)
+		#if (MODULE ==USER)
 			printf("enter cardholder's name:");
 			gets(CardHolderName);
-		#else
+		#elif (MODULE ==TEST)
 			strcpy(CardHolderName,cardData->cardHolderName);
 		#endif
 		CardHolderName_len=strlen(CardHolderName);
@@ -42,10 +42,10 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData){
 	{
 		
 		
-		#if (MODULE !=TEST)
-			printf("enter card expiry date:");
+		#if (MODULE ==USER)
+			printf("enter card expiry date (MM/YY):");
 			gets(cardExpirationDate);
-		#else
+		#elif (MODULE ==TEST)
 			strcpy(cardExpirationDate,cardData->cardExpirationDate);
 		#endif
 		if(strlen(cardExpirationDate)!=5)
@@ -79,10 +79,10 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
 	if(cardData!=NULL)
 	{
 		
-		#if (MODULE !=TEST)
+		#if (MODULE ==USER)
 			printf("enter Primary Account Number:");
 			gets(primaryAccountNumber);
-		#else
+		#elif (MODULE ==TEST)
 			strcpy(primaryAccountNumber,cardData->primaryAccountNumber);
 		#endif
 		if((strlen(primaryAccountNumber)>16) &&(strlen(primaryAccountNumber)<19))
@@ -129,7 +129,7 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
 */
 #if (MODULE == TEST)
 
-// Test function for getCardHolderName
+
  void getCardHolderNameTest(void) {
     ST_cardData_t cardData;
     EN_cardError_t result;
@@ -137,7 +137,7 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     printf("--------------------------------------------------------------------------------------------\n");
     printf("\t\t\tgetCardHolderNameTest\t\t\t\n");
 
-    // Test Case 1: Invalid name (not enough parts)
+    
     printf("\nTest Case 1:\n");
     printf("Input Data: ola ahmed mobark\n");
     strcpy((char *)cardData.cardHolderName, "ola ahmed mobark");
@@ -145,7 +145,7 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     printf("Expected Result: WRONG_NAME\n");
     printf("Actual Result: %s\n", result == WRONG_NAME ? "WRONG_NAME" : "CARD_OK");
 
-    // Test Case 2: Valid name
+    
     printf("\nTest Case 2:\n");
     printf("Input Data: ola ahmed el_hossiny mo\n");
     strcpy((char *)cardData.cardHolderName, "ola ahmed el_hossiny mo");
@@ -154,7 +154,7 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     printf("Actual Result: %s\n", result == CARD_OK ? "CARD_OK" : "WRONG_NAME");
 }
 
-// Test function for getCardExpiryDate
+
  void getCardExpiryDateTest(void) {
     ST_cardData_t cardData;
     EN_cardError_t result;
@@ -162,7 +162,7 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     printf("--------------------------------------------------------------------------------------------\n");
     printf("\t\t\tgetCardExpiryDateTest\t\t\t\n");
 
-    // Test Case 1: Invalid expiry date format
+   
     printf("\nTest Case 1:\n");
     printf("Input Data: 1010\n");
     strcpy((char *)cardData.cardExpirationDate, "1010");
@@ -170,7 +170,7 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     printf("Expected Result: WRONG_EXP_DATE\n");
     printf("Actual Result: %s\n", result == WRONG_EXP_DATE ? "WRONG_EXP_DATE" : "CARD_OK");
 
-    // Test Case 2: Valid expiry date
+    
     printf("\nTest Case 2:\n");
     printf("Input Data: 10/24\n");
     strcpy((char *)cardData.cardExpirationDate, "10/24");
@@ -179,7 +179,7 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     printf("Actual Result: %s\n", result == CARD_OK ? "CARD_OK" : "WRONG_EXP_DATE");
 }
 
-// Test function for getCardPAN
+
  void getCardPANTest(void) {
     ST_cardData_t cardData;
     EN_cardError_t result;
@@ -187,7 +187,7 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     printf("--------------------------------------------------------------------------------------------\n");
     printf("\t\t\tgetCardPANTest\t\t\t\n");
 
-    // Test Case 1: Invalid PAN (too short)
+    
     printf("\nTest Case 1:\n");
     printf("Input Data: 1234\n");
     strcpy((char *)cardData.primaryAccountNumber, "1234");
@@ -195,7 +195,7 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     printf("Expected Result: WRONG_PAN\n");
     printf("Actual Result: %s\n", result == WRONG_PAN ? "WRONG_PAN" : "CARD_OK");
 
-    // Test Case 2: Invalid PAN (contains letters)
+   
     printf("\nTest Case 2:\n");
     printf("Input Data: qwertyuioasdfghjkl\n");
     strcpy((char *)cardData.primaryAccountNumber, "qwertyuioasdfghjkl");
@@ -203,7 +203,7 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     printf("Expected Result: WRONG_PAN\n");
     printf("Actual Result: %s\n", result == WRONG_PAN ? "WRONG_PAN" : "CARD_OK");
 
-    // Test Case 3: Valid PAN (correct length)
+   
     printf("\nTest Case 3:\n");
     printf("Input Data: 12345678910111213\n");
     strcpy((char *)cardData.primaryAccountNumber, "12345678910111213");
