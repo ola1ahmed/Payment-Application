@@ -1,6 +1,8 @@
-#include "queue.h"
+
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "queue.h"
 
 
 
@@ -106,6 +108,18 @@ void Traverse_Queue(TransactionQueue *my_queue, void (*func)(ST_transaction_t *)
     }
 }
 
+void print_Queue(ST_transaction_t *currentTransaction)
+{
+		printf("Transaction Sequence Number: %u\n", currentTransaction->transactionSequenceNumber);
+		printf("Cardholder Name: %s\n", currentTransaction->cardHolderData.cardHolderName);
+		printf("PAN: %s\n", currentTransaction->cardHolderData.primaryAccountNumber);
+		printf("Card Expiration Date: %s\n", currentTransaction->cardHolderData.cardExpirationDate);
+		printf("Transaction Date: %s\n", currentTransaction->terminalData.transactionDate);
+		printf("Transaction Amount: %.2f\n", currentTransaction->terminalData.transAmount);
+		printf("Terminal Max Amount: %.2f\n", currentTransaction->terminalData.maxTransAmount);
+		printf("Transaction State: %d\n", currentTransaction->transState);
+		printf("###########################################\n");
+}
 status_t Get_Queue_Count(TransactionQueue *my_queue, uint32 *QueueCount) {
     status_t status = Queue_NOK;
     if (my_queue != NULL) 

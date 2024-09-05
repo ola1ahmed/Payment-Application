@@ -61,3 +61,12 @@ Transaction Amount: 100.00
 Terminal Max Amount: 1000.00
 Transaction State: 0
 ###########################################
+Transaction Sequence Number: 8
+Cardholder Name: ahmed aly ahmed aly amr
+PAN: 12345678901234567
+Card Expiration Date: 12/26
+Transaction Date: 12/12/2024
+Transaction Amount: 100.00
+Terminal Max Amount: 1000.00
+Transaction State: 0
+###########################################

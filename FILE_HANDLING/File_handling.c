@@ -1,32 +1,19 @@
-#include "file_handling.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-extern uint32 lastSequenceNumber ;
-/*
-EN_serverError_t saveTransactionToFile(ST_transaction_t *transData, const uint8 *filename)
-{
-    FILE *file = fopen(filename, "a"); 
-    if (file == NULL)
-    {
-        perror("Error opening file");
-        return SAVING_FAILED;
-    }
+#include "File_handling.h"
 
-	fprintf(file, "%u %s %.2f %d %.2f %s %s %s\n",
-        transData->transactionSequenceNumber,
-        transData->terminalData.transactionDate,
-        transData->terminalData.transAmount,
-        transData->transState,
-        transData->terminalData.maxTransAmount,
-        transData->cardHolderData.cardHolderName,
-        transData->cardHolderData.primaryAccountNumber,
-        transData->cardHolderData.cardExpirationDate);
-    
-    fclose(file);
-    return SERVER_OK;
-}*/
+#include "../Data_Structure/linkedlist.h"
+#include "../Data_Structure/queue.h"
+#include "../Data_Structure/stack.h"
+
+extern uint32 lastSequenceNumber ;
+
+const char *transactionFilename = "transactions.txt";
+const uint8 *accountsFilename = "accounts.txt";
+
 
 EN_serverError_t loadTransactionsFromFile(TransactionStack *stack,TransactionQueue *queue, const uint8 *filename)
 {
@@ -88,8 +75,6 @@ EN_serverError_t loadTransactionsFromFile(TransactionStack *stack,TransactionQue
                 {
                     lastSequenceNumber = transaction.transactionSequenceNumber;
                 }
-
-                //printf("Updated Last Sequence Number: %d\n", lastSequenceNumber);
                 Enqueue_Element(queue, newTransaction);
 
 				pushTransaction(stack, newTransaction);
@@ -124,6 +109,7 @@ EN_serverError_t saveAccountToFile(ST_accountsDB_t *account, const uint8 *filena
     fclose(file);
     return SERVER_OK;
 }
+
 EN_serverError_t updateAccountToFile(ST_accountsDB_t *account, const uint8 *filename)
 {
 	ST_accountsDB_t *current=account;

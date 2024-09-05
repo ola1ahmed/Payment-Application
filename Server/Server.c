@@ -1,18 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 #include "server.h"
-#include "queue.h"
-#include "stack.h"
-#include "linkedlist.h"
-#include "file_handling.h" 
 
 extern ST_accountsDB_t *accountsDB ;
 extern TransactionQueue *transactionsDB;  
-//extern TransactionStack transactionStack; 
+
 extern TransactionStack *stack;
-const char *transactionFilename = "transactions.txt";
- const uint8 *accountsFilename = "accounts.txt";
+extern const char *transactionFilename;
+extern const uint8 *accountsFilename ;
 extern uint32 lastSequenceNumber ;
 
 
@@ -118,6 +115,17 @@ EN_serverError_t saveTransaction(ST_transaction_t *transData)
 
     return SERVER_OK;
 }
+
+void lastSavedTransactions (void)
+{
+	Stack_Top(stack, print_Stack);
+}
+
+void listSavedTransactions(void)
+{
+	Traverse_Queue(transactionsDB, print_Queue);
+}
+
 EN_serverError_t isValidAccount(ST_cardData_t *cardData, ST_accountsDB_t **accountReference)
 {
 	EN_serverError_t Server_Err_state=SERVER_OK;
@@ -181,30 +189,6 @@ EN_serverError_t isAmountAvailable(ST_terminalData_t *termData, ST_accountsDB_t 
 	}
     return Server_Err_state;
 }
-void listSavedTransactions(void)
-{
-    if (stack->top == NULL) {
-        printf("No transactions available.\n");
-        return;
-    }
-
-    TransactionStackNode *currentNode = stack->top;
-    while (currentNode != NULL) {
-        ST_transaction_t *currentTransaction = &currentNode->transaction;
-        printf("Transaction Sequence Number: %u\n", currentTransaction->transactionSequenceNumber);
-        printf("Cardholder Name: %s\n", currentTransaction->cardHolderData.cardHolderName);
-        printf("PAN: %s\n", currentTransaction->cardHolderData.primaryAccountNumber);
-        printf("Card Expiration Date: %s\n", currentTransaction->cardHolderData.cardExpirationDate);
-        printf("Transaction Date: %s\n", currentTransaction->terminalData.transactionDate);
-        printf("Transaction Amount: %.2f\n", currentTransaction->terminalData.transAmount);
-        printf("Terminal Max Amount: %.2f\n", currentTransaction->terminalData.maxTransAmount);
-        printf("Transaction State: %d\n", currentTransaction->transState);
-        printf("###########################################\n");
-
-        currentNode = currentNode->next; 
-    }
-}
-
 
 /*
 --------------------------------------------------------------------------------

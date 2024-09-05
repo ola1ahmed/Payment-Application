@@ -6,18 +6,9 @@
 #include <ctype.h>
 #include <time.h>
 
-#include "Card.h"
-
-
-
-
-typedef struct ST_terminalData_t
-{
-	float32 transAmount;
-	float32 maxTransAmount;
-	uint8 transactionDate[11];
-	
-}ST_terminalData_t;
+#include "../Data_Structure/linkedlist.h"
+#include "../Data_Structure/queue.h"
+#include "../Data_Structure/stack.h"
 
 typedef enum EN_terminalError_t
 {
@@ -50,7 +41,7 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData);
 --------------------------------------------------------------------------------
 */
 void getTransactionDateTest(void);
-void isCardExpriedTest(void);
+void isCardExpiredTest(void);
 void getTransactionAmountTest(void);
 void isBelowMaxAmountTest(void);
 void setMaxAmountTest(void);

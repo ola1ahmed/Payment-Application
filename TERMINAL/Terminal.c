@@ -1,7 +1,6 @@
 #include "Terminal.h"
 
 
-
 EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
 	
 	EN_terminalError_t Ter_Err_state=TERMINAL_OK;

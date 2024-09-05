@@ -1,7 +1,8 @@
-#include "stack.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "stack.h"
 
 TransactionStack* CreateStack(stutes_t *stutes)
 {
@@ -52,11 +53,59 @@ ST_transaction_t popTransaction(TransactionStack *stack,stutes_t *stutes)
     return transaction;
 }
 
+
+void Stack_Top(TransactionStack *stack, void (*func)(ST_transaction_t *)) {
+    if (stack != NULL) 
+	{
+        TransactionStackNode *topNode = stack->top;
+        
+        func(&topNode->transaction);
+        topNode = topNode->next;
+        
+    }
+	else
+	{
+		printf("No Transactions avilable \n");
+	}
+}
+
+void Traverse_Stack(TransactionStack *stack, void (*func)(ST_transaction_t *)) {
+    if (stack != NULL) 
+	{
+        TransactionStackNode *topNode = stack->top;
+        while (topNode != NULL) 
+		{
+            func(&topNode->transaction);
+            topNode = topNode->next;
+        }
+    }
+	else
+	{
+		printf("No Transactions avilable \n");
+	}
+}
+
+void print_Stack(ST_transaction_t *currentTransaction)
+{
+		printf("Transaction Sequence Number: %u\n", currentTransaction->transactionSequenceNumber);
+		printf("Cardholder Name: %s\n", currentTransaction->cardHolderData.cardHolderName);
+		printf("PAN: %s\n", currentTransaction->cardHolderData.primaryAccountNumber);
+		printf("Card Expiration Date: %s\n", currentTransaction->cardHolderData.cardExpirationDate);
+		printf("Transaction Date: %s\n", currentTransaction->terminalData.transactionDate);
+		printf("Transaction Amount: %.2f\n", currentTransaction->terminalData.transAmount);
+		printf("Terminal Max Amount: %.2f\n", currentTransaction->terminalData.maxTransAmount);
+		printf("Transaction State: %d\n", currentTransaction->transState);
+		printf("###########################################\n");
+}
+
+
 uint32 isStackEmpty(const TransactionStack *stack,stutes_t *stutes)
 {
 	*stutes =S_EMPTY;
     return stack->top == NULL;
 }
+
+
 void destroyStack(TransactionStack *stack)
 {
     while (stack->top != NULL)

@@ -1,5 +1,6 @@
 #include "app.h"
 
+
 TransactionQueue *transactionsDB = NULL;  
 status_t status;
 stutes_t stackstutes;
@@ -13,6 +14,7 @@ uint32 lastSequenceNumber ;
 #if (MODULE==USER)
 void Login(void){
 	uint8 choise;
+	sint8 flag=-1;
 	loadAccountsFromFile(&accountsDB,accountsFilename);
 	printAccounts(accountsDB);
 	if (transactionsDB == NULL)
@@ -30,12 +32,13 @@ void Login(void){
         lastSequenceNumber = 0; 
     }
 	
-	while(1)
+	while(flag==-1)
 	{
-		printf("***************************\n");
+		flag=0;
+		printf("******************************************************\n");
 		printf("for LOGIN enter [L] : \n");
 		printf("for EXIT  enter [E] : \n");
-		printf("***************************\n");
+		printf("******************************************************\n");
 		fflush(stdin);
 		scanf("%c",&choise);
 		/*printf("loading");
@@ -47,52 +50,62 @@ void Login(void){
 		clearScreen();*/
 		switch(choise)
 		{
-		case 'L':
-			firstpage();
-			break;
-		case 'E':
-			EXIT();
-			return;
-		default:
-			Login();
-			break;
+			case 'L':
+				firstpage();
+				break;
+			case 'E':
+				EXIT();
+				return;
+			default:
+				flag=-1;
+				printf("invalid option\n");
+				sleep(1);
+
+				break;
 		}
-	}
 	
+	}
 }
 void firstpage(void){
 	uint8 choise;
-	printf("***************************\n");
-	printf("for Transactions enter [T] : \n");
-	printf("for listSavedTransactions [L]\n");
-	printf("for EXIT  enter [E] : \n");
-	printf("***************************\n");
-	fflush(stdin);
-		scanf("%c",&choise);
-		/*printf("loading");
-		for(int i=0;i<3;i++)
+	while(1)
+	{
+		printf("******************************************************\n");
+		printf("for Transactions enter				[T]:\n");
+		printf("for List All Saved Transactions			[A]:\n");
+		printf("for Last Saved Transactions			[L]:\n");
+		printf("for EXIT enter					[E]:\n");
+		printf("******************************************************\n");
+		fflush(stdin);
+			scanf("%c",&choise);
+			/*printf("loading");
+			for(int i=0;i<3;i++)
+				{
+					printf(".");
+					sleep(1);
+				}
+			clearScreen();*/
+			switch(choise)
 			{
-				printf(".");
-				sleep(1);
+				case 'T':
+					appStart();
+					break;
+				case 'A':
+					listSavedTransactions();
+					break;
+				case 'L':
+					lastSavedTransactions();
+					
+					break;
+				case 'E':
+					EXIT();
+					return;		
+				default:
+					printf("invalid option\n");
+					sleep(1);
+					break;
 			}
-		clearScreen();*/
-		switch(choise)
-		{
-		case 'T':
-			appStart();
-			break;
-		case 'L':
-		listSavedTransactions();
-		break;
-		case 'E':
-			EXIT();
-			return;
-		default:
-			firstpage();
-			break;
-		}
-	
-	
+	}
 }
 
 void appStart(void) {
@@ -178,14 +191,7 @@ void appStart(void) {
     printf("Transaction approved.\n");
 }
 #endif
-/*
-----------------------------------------------------------------------------
-Name:clearScreen
-Parameters:No parameters
-Return: Nothing to return
-Usage: it used to clear screen after each process.
-----------------------------------------------------------------------------
-*/
+
 
 void clearScreen() {
     #ifdef _WIN32
@@ -195,14 +201,7 @@ void clearScreen() {
     #endif
 
 }
-/*
-----------------------------------------------------------------------------
-Name:EXIT
-Parameters:No parameters
-Return: Nothing to return
-Usage: it used to exit out of program &free memory allocation.
-----------------------------------------------------------------------------
-*/
+
 void EXIT(){
 	Destroy_Queue(transactionsDB);
 	destroyStack(stack);
@@ -221,34 +220,6 @@ void EXIT(){
 
 #if (MODULE==TEST)
 
-void addTestTransactions(void) {
-    ST_transaction_t transaction1, transaction2;
-    status_t status;
-
-    // Set data for transaction 1
-    transaction1.transactionSequenceNumber = lastSequenceNumber++;
-    strcpy((char *)transaction1.terminalData.transactionDate, "12/12/2024");
-    transaction1.terminalData.transAmount = 900.00;
-    transaction1.terminalData.maxTransAmount = 1000.00;
-    strcpy((char *)transaction1.cardHolderData.cardHolderName, "ola ahmed el_hossiny mo");
-    strcpy((char *)transaction1.cardHolderData.primaryAccountNumber, "12345678901234567");
-    strcpy((char *)transaction1.cardHolderData.cardExpirationDate, "12/24");
-    transaction1.transState = APPROVED;
-
-    // Set data for transaction 2
-    transaction2.transactionSequenceNumber =lastSequenceNumber++;
-    strcpy((char *)transaction2.terminalData.transactionDate, "13/12/2024");
-    transaction2.terminalData.transAmount = 100.00;
-    transaction2.terminalData.maxTransAmount = 1000.00;
-    strcpy((char *)transaction2.cardHolderData.cardHolderName, "ahmed ahmed el_hossiny");
-    strcpy((char *)transaction2.cardHolderData.primaryAccountNumber, "23456789012345678");
-    strcpy((char *)transaction2.cardHolderData.cardExpirationDate, "01/25");
-    transaction2.transState = DECLINED_INSUFFECIENT_FUND;
-
-    // Enqueue transactions
-    Enqueue_Element(transactionsDB, &transaction1);
-    Enqueue_Element(transactionsDB, &transaction2);
-}
 
 void testApplication(void)
 {
@@ -271,7 +242,7 @@ void testApplication(void)
     }
 	
 
-/*
+
 	getCardHolderNameTest();
 	getCardExpiryDateTest ();
 	getCardPANTest(); 
@@ -288,8 +259,7 @@ void testApplication(void)
     isValidAccountTest();
     isBlockedAccountTest();
     isAmountAvailableTest();
-
-	addTestTransactions();*/
+	
     recieveTransactionDataTest();
     listSavedTransactionsTest();
 	

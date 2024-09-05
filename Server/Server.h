@@ -4,9 +4,14 @@
 
 
 
-#include "STD_TYPES.h"
-#include "Card.h"
-#include "Terminal.h"
+#include "../Library/STD_TYPES.h"
+
+#include "../TERMINAL/Terminal.h"
+
+#include "../Data_Structure/linkedlist.h"
+#include "../Data_Structure/queue.h"
+#include "../Data_Structure/stack.h"
+
 
 
 typedef struct ST_transaction_t ST_transaction_t;
@@ -21,23 +26,6 @@ typedef enum EN_transState_t
 	INTERNAL_SERVER_ERROR
 }EN_transStat_t;
 
-typedef enum EN_serverError_t
-{
-	SERVER_OK,
-	SAVING_FAILED,
-	TRANSACTION_NOT_FOUND,
-	ACCOUNT_NOT_FOUND,
-	LOW_BALANCE,
-	BLOCKED_ACCOUNT
-}EN_serverError_t ;
-
-typedef struct ST_transaction_t
-{
-    ST_cardData_t cardHolderData;
-    ST_terminalData_t terminalData;
-    uint32 transactionSequenceNumber;
-    EN_serverError_t transState;
-} ST_transaction_t;
 /*
 --------------------------------------------------------------------------------
 
@@ -51,8 +39,8 @@ EN_serverError_t isBlockedAccount(ST_accountsDB_t *accountReference);
 EN_serverError_t isAmountAvailable(ST_terminalData_t *termData, ST_accountsDB_t *accountReference);
 EN_serverError_t saveTransaction(ST_transaction_t *transData);
 EN_transStat_t recieveTransactionData(ST_transaction_t *transData);
-//void listSavedTransactions(TransactionStack *stack) 
 void listSavedTransactions(void);
+void lastSavedTransactions (void);
 /*
 --------------------------------------------------------------------------------
 
@@ -64,5 +52,6 @@ void isValidAccountTest(void);
 void isBlockedAccountTest(void);
 void isAmountAvailableTest(void);
 void recieveTransactionDataTest(void);
+void listSavedTransactionsTest(void);
 #endif
 
