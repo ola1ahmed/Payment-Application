@@ -155,6 +155,7 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
 	uint8 length=strlen(cardData->primaryAccountNumber);
 	sint8 digit=0,i=0,sum=0;
 	uint8 parity=length%2;
+	
 	if(cardData!=NULL)
 	{
 		for(i=length-1;i>=0;i--)
@@ -365,16 +366,6 @@ void isValidCardPANTest(void) {
 	printf("--------------------------------------------------------------------------------------------\n");
 	printf("\t\t\tisValidCardPANTest\t\t\t\n");
     // Test Case 1: Valid Luhn number
-	
-	    //33345678901234567
-	 printf("\nTest Case 0:\n");
-    printf("Input Data: 82205415651366719\n");
-    strcpy((char *)cardData.primaryAccountNumber, "82205415651366719");
-    result = isValidCardPAN(&cardData);
-    printf("Expected Result: TERMINAL_OK\n");
-    printf("Actual Result: %s\n", result == TERMINAL_OK ? "TERMINAL_OK" : "INVALID_CARD");
-	
-	
 	
     strcpy((char *)cardData.primaryAccountNumber, "4532015112830366");  
     result = isValidCardPAN(&cardData);

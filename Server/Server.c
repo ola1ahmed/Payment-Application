@@ -208,7 +208,7 @@ void recieveTransactionDataTest(void)
  
     printf("\nTest Case 1:\n");
 	 strcpy((char *)transaction.cardHolderData.cardHolderName,"ahmed aly ahmed aly amr");
-    strcpy((char *)transaction.cardHolderData.primaryAccountNumber, "12345678901234567");
+    strcpy((char *)transaction.cardHolderData.primaryAccountNumber, "13515904358318313");
 	strcpy((char *)transaction.cardHolderData.cardExpirationDate,"12/26");
     transaction.terminalData.transAmount = 100.0;
     strcpy((char *)transaction.terminalData.transactionDate, "12/12/2024");
@@ -272,7 +272,7 @@ void isValidAccountTest(void) {
     printf("\t\t\tisValidAccountTest\t\t\t\n");
 
     printf("\nTest Case 1:\n");
-    strcpy((char*)cardData.primaryAccountNumber, "1234567890123456789");
+    strcpy((char*)cardData.primaryAccountNumber, "13515904358318313");
     result = isValidAccount(&cardData, &accountReference);
     printf("Expected SERVER_OK\n");
 	printf("Actual: %s\n", (result == SERVER_OK) ? "SERVER_OK" : "ACCOUNT_NOT_FOUND");

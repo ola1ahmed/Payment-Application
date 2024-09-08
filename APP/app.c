@@ -248,26 +248,26 @@ void testApplication(void)
     }
 	
 
-/*
+
 	getCardHolderNameTest();
-	getCardExpiryDateTest ();*/
+	getCardExpiryDateTest ();
 	getCardPANTest(); 
 	
-/*	getTransactionDateTest();
+	getTransactionDateTest();
 	isCardExpiredTest();
 	getTransactionAmountTest();
 	
 	isBelowMaxAmountTest();
-	setMaxAmountTest();*/
+	setMaxAmountTest();
 	isValidCardPANTest();
-	/*
+
 	
     isValidAccountTest();
     isBlockedAccountTest();
     isAmountAvailableTest();
 	
     recieveTransactionDataTest();
-    listSavedTransactionsTest();*/
+    listSavedTransactionsTest();
 	
 /*	EXIT();*/
 }
