@@ -141,6 +141,12 @@ void appStart(void) {
         printf("Error: Invalid card PAN.\n");
         return;
     }
+	cardError = isValidCardPAN(&cardData);
+    if (cardError != TERMINAL_OK) 
+	{
+        printf("Error: Invalid card PAN.\n");
+        return;
+    }
     terminalError = getTransactionDate(&terminalData);
     if (terminalError != TERMINAL_OK) 
 	{
