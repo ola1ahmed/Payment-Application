@@ -228,7 +228,7 @@ void recieveTransactionDataTest(void)
     }
 
     printf("\nTest Case 2:\n");
-    strcpy((char *)transaction.cardHolderData.primaryAccountNumber, "11111122201234567");
+    strcpy((char *)transaction.cardHolderData.primaryAccountNumber, "59913102650044072");
 
     result = recieveTransactionData(&transaction);
     printf("Expected: DECLINED_STOLEN_CARD\n");
@@ -244,7 +244,7 @@ void recieveTransactionDataTest(void)
     }
 
     printf("\nTest Case 3:\n");
-    strcpy((char *)transaction.cardHolderData.primaryAccountNumber, "12345678901234567");
+    strcpy((char *)transaction.cardHolderData.primaryAccountNumber, "05330169894419202");
     transaction.terminalData.transAmount = 6000.0; 
 
     result = recieveTransactionData(&transaction);
