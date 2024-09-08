@@ -2,7 +2,7 @@
 #define _DATA_BASE_H_
 
 #include "../Library/STD_TYPES.h"
-#define MODULE   TEST
+#define MODULE   USER
 #define TEST     1
 #define USER     2
 

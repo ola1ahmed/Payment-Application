@@ -3,10 +3,9 @@
 #define _SERVER_H_
 
 
-
+#include <string.h>
 #include "../Library/STD_TYPES.h"
 
-#include "../TERMINAL/Terminal.h"
 
 #include "../Data_Structure/linkedlist.h"
 #include "../Data_Structure/queue.h"
