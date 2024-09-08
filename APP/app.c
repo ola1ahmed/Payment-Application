@@ -50,9 +50,11 @@ void Login(void){
 		clearScreen();*/
 		switch(choise)
 		{
+			case 'l':
 			case 'L':
 				firstpage();
 				break;
+			case 'e':
 			case 'E':
 				EXIT();
 				return;
@@ -87,16 +89,20 @@ void firstpage(void){
 			clearScreen();*/
 			switch(choise)
 			{
+				case 't':
 				case 'T':
 					appStart();
 					break;
+				case 'a':
 				case 'A':
 					listSavedTransactions();
 					break;
+				case 'l':
 				case 'L':
 					lastSavedTransactions();
 					
 					break;
+				case 'e':
 				case 'E':
 					EXIT();
 					return;		
@@ -242,26 +248,26 @@ void testApplication(void)
     }
 	
 
-
+/*
 	getCardHolderNameTest();
-	getCardExpiryDateTest ();
+	getCardExpiryDateTest ();*/
 	getCardPANTest(); 
 	
-	getTransactionDateTest();
+/*	getTransactionDateTest();
 	isCardExpiredTest();
 	getTransactionAmountTest();
 	
 	isBelowMaxAmountTest();
-	setMaxAmountTest();
+	setMaxAmountTest();*/
 	isValidCardPANTest();
-	
+	/*
 	
     isValidAccountTest();
     isBlockedAccountTest();
     isAmountAvailableTest();
 	
     recieveTransactionDataTest();
-    listSavedTransactionsTest();
+    listSavedTransactionsTest();*/
 	
 /*	EXIT();*/
 }

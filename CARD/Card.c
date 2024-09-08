@@ -187,7 +187,6 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     printf("--------------------------------------------------------------------------------------------\n");
     printf("\t\t\tgetCardPANTest\t\t\t\n");
 
-    
     printf("\nTest Case 1:\n");
     printf("Input Data: 1234\n");
     strcpy((char *)cardData.primaryAccountNumber, "1234");

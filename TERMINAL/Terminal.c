@@ -365,6 +365,17 @@ void isValidCardPANTest(void) {
 	printf("--------------------------------------------------------------------------------------------\n");
 	printf("\t\t\tisValidCardPANTest\t\t\t\n");
     // Test Case 1: Valid Luhn number
+	
+	    //33345678901234567
+	 printf("\nTest Case 0:\n");
+    printf("Input Data: 82205415651366719\n");
+    strcpy((char *)cardData.primaryAccountNumber, "82205415651366719");
+    result = isValidCardPAN(&cardData);
+    printf("Expected Result: TERMINAL_OK\n");
+    printf("Actual Result: %s\n", result == TERMINAL_OK ? "TERMINAL_OK" : "INVALID_CARD");
+	
+	
+	
     strcpy((char *)cardData.primaryAccountNumber, "4532015112830366");  
     result = isValidCardPAN(&cardData);
     printf("Test Case 1: Input PAN: %s\n", cardData.primaryAccountNumber);
