@@ -2,7 +2,7 @@
 #define _DATA_BASE_H_
 
 #include "../Library/STD_TYPES.h"
-#define MODULE   TEST
+#define MODULE   USER
 #define TEST     1
 #define USER     2
 
@@ -19,8 +19,11 @@ typedef struct ST_accountsDB_t
     float32 balance;
     EN_accountState_t state;
     uint8 primaryAccountNumber[20];
-    struct ST_accountsDB_t *next; 
+    uint8 cardHolderName[25];        // Cardholder's name
+    uint8 cardExpirationDate[6];     // Card expiration date (MM/YY)
+    struct ST_accountsDB_t *next;    // Pointer to the next account in the linked list
 } ST_accountsDB_t;
+
 
 typedef struct ST_cardData_t
 {

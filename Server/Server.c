@@ -11,11 +11,11 @@ extern TransactionStack *stack;
 extern const char *transactionFilename;
 extern const uint8 *accountsFilename ;
 extern uint32 lastSequenceNumber ;
-
+ST_accountsDB_t *accountReference = NULL;
 
 EN_transStat_t recieveTransactionData(ST_transaction_t *transData)
 {
-    ST_accountsDB_t *accountReference = NULL;
+    //ST_accountsDB_t *accountReference = NULL;
     EN_serverError_t Server_Err_state = FRAUD_CARD; 
 	
     if (isValidAccount(&transData->cardHolderData, &accountReference) != ACCOUNT_NOT_FOUND)
@@ -132,8 +132,10 @@ EN_serverError_t isValidAccount(ST_cardData_t *cardData, ST_accountsDB_t **accou
     ST_accountsDB_t *current = accountsDB;
 		while (current != NULL)
 		{
-			if (strcmp((char *)cardData->primaryAccountNumber, (char *)current->primaryAccountNumber) == 0)
+			if (strcmp((char *)cardData->primaryAccountNumber, (char *)current->primaryAccountNumber) == 0 && strcmp((char *)cardData->cardHolderName,(char *)current->cardHolderName)==0
+				&& strcmp((char *)cardData->cardExpirationDate, (char *)current->cardExpirationDate) == 0)
 			{
+				
 				*accountReference = current;
 				Server_Err_state=SERVER_OK;
 				return Server_Err_state;

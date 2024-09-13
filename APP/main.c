@@ -15,5 +15,7 @@ int main()
 }
 
 
-//gcc -o my_program APP/main.c APP/app.c CARD/Card.c TERMINAL/Terminal.c Server/server.c Data_Structure/linkedlist.c Data_Structure/stack.c Data_Structure/queue.c FILE_HANDLING/File_handling.c
-//my_program.exe
+/*
+gcc -o my_program APP/main.c APP/app.c CARD/Card.c TERMINAL/Terminal.c Server/server.c Data_Structure/linkedlist.c Data_Structure/stack.c Data_Structure/queue.c FILE_HANDLING/File_handling.c
+my_program.exe
+*/

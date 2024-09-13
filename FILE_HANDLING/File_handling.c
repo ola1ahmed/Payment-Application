@@ -93,48 +93,58 @@ EN_serverError_t loadTransactionsFromFile(TransactionStack *stack,TransactionQue
 
 EN_serverError_t saveAccountToFile(ST_accountsDB_t *account, const uint8 *filename)
 {
-    FILE *file = fopen(filename, "a");  
+    FILE *file = fopen(filename, "a");  // Open file in append mode
     if (file == NULL)
     {
         perror("Error opening file");
         return SAVING_FAILED;
     }
 
-   
-        fprintf(file, "%.2f %d %s\n",
+    // Save account information in a comma-separated format
+    fprintf(file, "%.2f,%d,%s,%s,%s\n",
             account->balance,
             account->state,
-            account->primaryAccountNumber);
-    
+            account->primaryAccountNumber,
+            account->cardHolderName,
+            account->cardExpirationDate);
+
     fclose(file);
     return SERVER_OK;
 }
+
 
 EN_serverError_t updateAccountToFile(ST_accountsDB_t *account, const uint8 *filename)
 {
-	ST_accountsDB_t *current=account;
-    FILE *file = fopen(filename, "w");  
+    FILE *file = fopen(filename, "w");  // Open file in write mode to overwrite the file
     if (file == NULL)
     {
         perror("Error opening file");
         return SAVING_FAILED;
     }
 
-	while(current!=NULL)
-	{
-        fprintf(file, "%.2f %d %s\n",
-            current->balance,
-            current->state,
-            current->primaryAccountNumber);
-			current=current->next;
+    ST_accountsDB_t *current = account;
+
+    while (current != NULL)
+    {
+        // Save account information in a comma-separated format
+        fprintf(file, "%.2f,%d,%s,%s,%s\n",
+                current->balance,
+                current->state,
+                current->primaryAccountNumber,
+                current->cardHolderName,
+                current->cardExpirationDate);
+
+        current = current->next;  // Move to the next account in the linked list
     }
+
     fclose(file);
     return SERVER_OK;
 }
 
+
 EN_serverError_t loadAccountsFromFile(ST_accountsDB_t **head, const uint8 *filename)
 {
-    FILE *file = fopen(filename, "r"); 
+    FILE *file = fopen(filename, "r");  // Open file in read mode
     if (file == NULL)
     {
         perror("Error opening file");
@@ -145,8 +155,11 @@ EN_serverError_t loadAccountsFromFile(ST_accountsDB_t **head, const uint8 *filen
     float32 balance;
     uint32 state;
     uint8 pan[20];
+    uint8 cardHolderName[25];
+    uint8 cardExpirationDate[6];
 
-    while (fscanf(file, "%f %d %s", &balance, &state, pan) == 3)
+    // Read account data from the file using comma as a separator
+    while (fscanf(file, "%f,%d,%[^,],%[^,],%s", &balance, &state, pan, cardHolderName, cardExpirationDate) == 5)
     {
         newAccount = (ST_accountsDB_t *)malloc(sizeof(ST_accountsDB_t));
         if (newAccount == NULL)
@@ -155,13 +168,18 @@ EN_serverError_t loadAccountsFromFile(ST_accountsDB_t **head, const uint8 *filen
             fclose(file);
             return SAVING_FAILED;
         }
+
         newAccount->balance = balance;
         newAccount->state = (EN_accountState_t)state;
         strcpy((uint8 *)newAccount->primaryAccountNumber, pan);
-        newAccount->next = *head;
+        strcpy((uint8 *)newAccount->cardHolderName, cardHolderName);
+        strcpy((uint8 *)newAccount->cardExpirationDate, cardExpirationDate);
+
+        newAccount->next = *head;  // Insert the new account at the beginning of the linked list
         *head = newAccount;
     }
 
     fclose(file);
     return SERVER_OK;
 }
+

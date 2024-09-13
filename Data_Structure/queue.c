@@ -102,7 +102,23 @@ void Traverse_Queue(TransactionQueue *my_queue, void (*func)(ST_transaction_t *)
         TransactionQueueNode *current = my_queue->front;
         while (current != NULL) 
 		{
-            func(&current->transaction);
+		
+			func(&current->transaction);
+
+            current = current->next;
+        }
+    }
+}
+void spacific_account(TransactionQueue *my_queue,ST_accountsDB_t *accountReference ,void (*func)(ST_transaction_t *)) {
+    if (my_queue != NULL) 
+	{
+        TransactionQueueNode *current = my_queue->front;
+        while (current != NULL) 
+		{
+			if (strcmp((char*)current->transaction.cardHolderData.primaryAccountNumber, (char*)accountReference->primaryAccountNumber) == 0)
+            {		
+				func(&current->transaction);
+			}
             current = current->next;
         }
     }

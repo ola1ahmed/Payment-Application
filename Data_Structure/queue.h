@@ -1,6 +1,7 @@
 
 #ifndef _QUEUE_H_
 #define _QUEUE_H_
+#include <string.h>
 
 #include "../Library/STD_TYPES.h"
 #include "../FILE_HANDLING/File_handling.h"
@@ -19,6 +20,8 @@ status_t Enqueue_Element(TransactionQueue *my_queue, ST_transaction_t *transacti
 ST_transaction_t *Dequeue_Element(TransactionQueue *my_queue, status_t *status);
 void Traverse_Queue(TransactionQueue *my_queue, void (*func)(ST_transaction_t *));
 void print_Queue(ST_transaction_t *currentTransaction);
+
+void spacific_account(TransactionQueue *my_queue,ST_accountsDB_t *accountReference ,void (*func)(ST_transaction_t *));
 status_t Get_Queue_Count(TransactionQueue *my_queue, uint32 *QueueCount);
 
 #endif

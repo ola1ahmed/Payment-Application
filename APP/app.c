@@ -11,6 +11,7 @@ extern const uint8 *accountsFilename;
 extern const uint8 *transactionFilename ;
 uint32 lastSequenceNumber ;
 
+extern ST_accountsDB_t *accountReference;
 #if (MODULE==USER)
 void Login(void){
 	uint8 choise;
@@ -166,7 +167,7 @@ void appStart(void) {
         return;
     }
    
-    terminalError = setMaxAmount(&terminalData, 20000.0);
+    terminalError = setMaxAmount(&terminalData, 2000.0);
     if (terminalError != TERMINAL_OK) 
 	{
         printf("Error: Invalid max amount.\n");
@@ -191,16 +192,33 @@ void appStart(void) {
 		switch(transactionStatus)
 		{
 			
-		case DECLINED_INSUFFECIENT_FUND: printf("DECLINED_INSUFFECIENT_FUND"); break;
+		case DECLINED_INSUFFECIENT_FUND: printf("DECLINED_INSUFFECIENT_FUND\n"); break;
 		case DECLINED_STOLEN_CARD: printf("DECLINED_STOLEN_CARD\n"); break;
-		case FRAUD_CARD: printf("FRAUD_CARD"); break;
-		case INTERNAL_SERVER_ERROR: printf("INTERNAL_SERVER_ERROR"); break;
+		case FRAUD_CARD: printf("FRAUD_CARD\n"); break;
+		case INTERNAL_SERVER_ERROR: printf("INTERNAL_SERVER_ERROR\n"); break;
 			
 		}
         return;
     }
 
     printf("Transaction approved.\n");
+	uint8 choise;
+		printf("******************************************************\n");
+		printf("for List All Transactions			[s]:\n");
+		printf("for EXIT this page enter			[E]:\n");
+		printf("******************************************************\n");
+		fflush(stdin);
+		scanf("%c",&choise);
+		switch(choise)
+		{
+			case 's':
+				spacific_account(transactionsDB,accountReference,print_Queue);
+				break;
+			case'e':
+				EXIT();
+				return;				
+					
+		}
 }
 #endif
 
