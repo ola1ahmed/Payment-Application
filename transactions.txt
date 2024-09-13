@@ -1,6 +1,5 @@
-
 Transaction Sequence Number: 1
-Cardholder Name: Ola Ahmed Elhossiny Mo 
+Cardholder Name: Ola Ahmed Elhossiny Mo
 PAN: 82205415651366719
 Card Expiration Date: 12/27
 Transaction Date: 12/12/2024
@@ -18,7 +17,7 @@ Terminal Max Amount: 2000.00
 Transaction State: 0
 ###########################################
 Transaction Sequence Number: 3
-Cardholder Name: Ola Ahmed Elhossiny Mo 
+Cardholder Name: Ola Ahmed Elhossiny Mo
 PAN: 82205415651366719
 Card Expiration Date: 12/27
 Transaction Date: 13/12/2024
